@@ -1,26 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import Main from "./components/Main";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      score: 0,
+      highScore: 0,
+      isClicked: []
+    };
+  }
+
+  scoreKeeper = id => {
+    if (this.state.isClicked.includes(id)) {
+      this.setState({
+        score: 0,
+        isClicked: []
+      });
+      alert("Loser");
+    } else {
+      this.setState({ isClicked: [...this.state.isClicked, id] });
+      const newScore = this.state.score + 1;
+
+      this.setState({
+        score: newScore
+      });
+      if (newScore > this.state.highScore) {
+        this.setState({ highScore: newScore });
+      }
+      if (newScore === 12) {
+        alert("You Won!!");
+        this.setState({
+          score: 0,
+          isClicked: []
+        });
+      }
+    }
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <Navbar score={this.state.score} highScore={this.state.highScore} />
+        <Main scoreKeeper={this.scoreKeeper} />
+      </div>
+    );
+  }
 }
 
 export default App;
