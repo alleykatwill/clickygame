@@ -16,10 +16,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "root": "dist/",
-  "routes": {
-    "/**": "index.html"
-  },
   "eslintConfig": {
     "extends": "react-app"
   },
